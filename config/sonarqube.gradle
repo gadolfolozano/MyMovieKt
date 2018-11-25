@@ -1,0 +1,37 @@
+apply plugin: 'org.sonarqube'
+
+task createTestReports(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    group = "Reporting"
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/*$ViewInjector*.*',
+                      '**/*$ViewBinder*.*',
+                      '**/*$MembersInjector*.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/dev/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+
+    executionData = files("${project.buildDir}/jacoco/testDevDebugUnitTest.exec")
+}
+
+tasks.sonarqube.dependsOn createTestReports
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "a5bb4f18fdfcec2406829a7357be389ba1983653"
+        property "sonar.sources", "src/main/java"
+    }
+}
