@@ -8,6 +8,7 @@ import pe.com.gadolfolozano.mymovie.R
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySplashBinding
 import pe.com.gadolfolozano.mymovie.model.BaseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
+import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivity
 import javax.inject.Inject
 
@@ -29,15 +30,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), S
         mSplashViewModel.navigator = this
         mSplashViewModel.dummyValue.observe(this, Observer<BaseModel> { baseModel ->
             if (baseModel != null && baseModel.status == BaseModel.STATUS_SUCCESS) {
-                openMainActivity()
-            } else {
                 openLoginActivity()
+            } else {
+                openMainActivity()
             }
         })
     }
 
     override fun openLoginActivity() {
-        TODO("not implemented")
+        val intent = LoginActivity.newIntent(this@SplashActivity)
+        startActivity(intent)
+        finish()
     }
 
     override fun openMainActivity() {
