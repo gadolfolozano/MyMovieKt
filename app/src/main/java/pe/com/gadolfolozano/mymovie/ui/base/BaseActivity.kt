@@ -59,6 +59,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>> : AppComp
         AndroidInjection.inject(this)
     }
 
+    fun getViewDataBinding(): T? {
+        return viewDataBinding
+    }
+
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.setContentView(this, layoutId)
         this.mViewModel = if (mViewModel == null) viewModel else mViewModel

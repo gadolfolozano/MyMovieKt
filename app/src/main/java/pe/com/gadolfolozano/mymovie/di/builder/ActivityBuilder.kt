@@ -2,6 +2,8 @@ package pe.com.gadolfolozano.mymovie.di.builder
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
+import pe.com.gadolfolozano.mymovie.ui.login.LoginModule
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivity
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivityModule
 import pe.com.gadolfolozano.mymovie.ui.splash.SplashActivity
@@ -15,4 +17,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
     internal abstract fun bindMainActivity(): MainActivity
+
+    @ContributesAndroidInjector(modules = arrayOf(LoginModule::class))
+    internal abstract fun bindLoginActivity(): LoginActivity
 }

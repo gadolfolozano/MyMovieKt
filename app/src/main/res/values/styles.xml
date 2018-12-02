@@ -6,11 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlNormal">@color/colorGrayBold</item>
+        <item name="colorControlActivated">@color/colorGrayLigth</item>
+        <item name="colorControlHighlight">@color/colorGrayLigth</item>
     </style>
 
     <!-- Splash Screen theme. -->
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@drawable/selector_color_button</item>
+        <item name="android:textColor">@drawable/selector_color_button_text</item>
     </style>
 
 </resources>
