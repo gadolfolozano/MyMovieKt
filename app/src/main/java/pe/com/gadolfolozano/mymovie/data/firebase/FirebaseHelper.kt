@@ -1,11 +1,9 @@
-package pe.com.gadolfolozano.mymovie.data
+package pe.com.gadolfolozano.mymovie.data.firebase
 
 import android.arch.lifecycle.LiveData
 import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
 import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 
-interface DataManager {
+interface FirebaseHelper {
     fun doLogin(username: String, password: String): LiveData<LoginResponseModel>
-
-    val dummyValue: LiveData<BaseResponseModel>
 }

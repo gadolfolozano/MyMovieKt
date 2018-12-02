@@ -3,11 +3,9 @@ package pe.com.gadolfolozano.mymovie.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
 import pe.com.gadolfolozano.mymovie.databinding.ActivityMainBinding
-import pe.com.gadolfolozano.mymovie.model.BaseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
 import javax.inject.Inject
 

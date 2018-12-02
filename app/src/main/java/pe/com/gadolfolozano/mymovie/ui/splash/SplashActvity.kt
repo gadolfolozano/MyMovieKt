@@ -2,11 +2,10 @@ package pe.com.gadolfolozano.mymovie.ui.splash
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.widget.Toast
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySplashBinding
-import pe.com.gadolfolozano.mymovie.model.BaseModel
+import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
 import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivity
@@ -28,8 +27,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), S
         super.onCreate(savedInstanceState)
 
         mSplashViewModel.navigator = this
-        mSplashViewModel.dummyValue.observe(this, Observer<BaseModel> { baseModel ->
-            if (baseModel != null && baseModel.status == BaseModel.STATUS_SUCCESS) {
+        mSplashViewModel.dummyValue.observe(this, Observer<BaseResponseModel> { baseModel ->
+            if (baseModel != null && baseModel.status == BaseResponseModel.STATUS_SUCCESS) {
                 openLoginActivity()
             } else {
                 openMainActivity()
