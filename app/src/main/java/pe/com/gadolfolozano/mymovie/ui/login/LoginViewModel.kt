@@ -7,7 +7,5 @@ import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseViewModel
 
 class LoginViewModel(dataManager: DataManager) : BaseViewModel<LoginNavigator>(dataManager) {
-    fun doLogin(username: String, password: String): LiveData<LoginResponseModel> {
-        return dataManager.doLogin(username, password)
-    }
+
 }
