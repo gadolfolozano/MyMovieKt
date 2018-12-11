@@ -4,4 +4,6 @@ interface LoginNavigator {
     fun openMainActivity()
 
     fun navigateToSignIn()
+
+    fun naviageToCreateAccount()
 }

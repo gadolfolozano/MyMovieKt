@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
 import pe.com.gadolfolozano.mymovie.ui.login.LoginModule
+import pe.com.gadolfolozano.mymovie.ui.login.createaccount.CreateAccountFragmentProvider
 import pe.com.gadolfolozano.mymovie.ui.login.signin.SignInFragmentProvider
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivity
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivityModule
@@ -19,6 +20,12 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
     internal abstract fun bindMainActivity(): MainActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(LoginModule::class, SignInFragmentProvider::class))
+    @ContributesAndroidInjector(
+        modules = arrayOf(
+            LoginModule::class,
+            SignInFragmentProvider::class,
+            CreateAccountFragmentProvider::class
+        )
+    )
     internal abstract fun bindLoginActivity(): LoginActivity
 }

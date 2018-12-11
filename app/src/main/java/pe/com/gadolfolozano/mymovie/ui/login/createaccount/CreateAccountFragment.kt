@@ -1,4 +1,4 @@
-package pe.com.gadolfolozano.mymovie.ui.login.signin
+package pe.com.gadolfolozano.mymovie.ui.login.createaccount
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
@@ -11,32 +11,31 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
-import pe.com.gadolfolozano.mymovie.databinding.FragmentSignInBinding
+import pe.com.gadolfolozano.mymovie.databinding.FragmentCreateAccountBinding
 import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
 import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseFragment
-import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
+import pe.com.gadolfolozano.mymovie.ui.util.Constants
 import pe.com.gadolfolozano.mymovie.ui.util.StringUtil
-
 import javax.inject.Inject
 
-class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(), SignInNavigator {
+class CreateAccountFragment : BaseFragment<FragmentCreateAccountBinding, CreateAccountViewModel>(),
+    CreateAccountNavigator {
 
     @Inject
-    lateinit var mSignInViewModel: SignInViewModel
+    lateinit var mCreateAccountViewModel: CreateAccountViewModel
 
     @Inject
     lateinit var mViewModelFactory: ViewModelProvider.Factory
 
-    var mBinding: FragmentSignInBinding? = null
+    var mBinding: FragmentCreateAccountBinding? = null
 
     override val bindingVariable: Int
         get() = BR.viewModel
     override val layoutId: Int
-        get() = R.layout.fragment_sign_in
-    override val viewModel: SignInViewModel
-        get() = ViewModelProviders.of(this, mViewModelFactory).get(SignInViewModel::class.java);
-
+        get() = R.layout.fragment_create_account
+    override val viewModel: CreateAccountViewModel
+        get() = ViewModelProviders.of(this, mViewModelFactory).get(CreateAccountViewModel::class.java);
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,35 +45,34 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(), S
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = getViewDataBinding()
-        setUp()
+
+        setup()
     }
 
-    fun setUp() {
-        mBinding?.tvUsername?.addTextChangedListener(LoginTextWatcher())
-        mBinding?.tvPassword?.addTextChangedListener(LoginTextWatcher())
-        mBinding?.tvPassword?.setOnEditorActionListener { _, actionId, _ ->
+    fun setup() {
+        mBinding?.tvUsername?.addTextChangedListener(CreateAccountTextWatcher())
+        mBinding?.tvPassword?.addTextChangedListener(CreateAccountTextWatcher())
+        mBinding?.tvRePassword?.addTextChangedListener(CreateAccountTextWatcher())
+        mBinding?.tvRePassword?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE && validateInputs()) {
-                mBinding?.buttonLogin?.performClick()
+                mBinding?.buttonCreateAccount?.performClick()
             }
             false
         }
 
-        mBinding?.buttonLogin?.isEnabled = false
-        mBinding?.buttonLogin?.setOnClickListener {
-            onButtonLoginClicked()
-        }
+        mBinding?.buttonCreateAccount?.isEnabled = false
         mBinding?.buttonCreateAccount?.setOnClickListener {
             onButtonCreateAccountClicked()
         }
     }
 
-    private fun onButtonLoginClicked() {
+    private fun onButtonCreateAccountClicked() {
         hideKeyboard()
         showLoading()
         val email = mBinding?.tvUsername?.text.toString()
         val password = mBinding?.tvPassword?.text.toString()
 
-        mSignInViewModel.doLogin(email, password).observe(this,
+        mCreateAccountViewModel.createAccount(email, password).observe(this,
             Observer<LoginResponseModel> { loginResponseModel ->
                 when (loginResponseModel?.status) {
                     BaseResponseModel.STATUS_LOADING -> {
@@ -98,18 +96,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(), S
             })
     }
 
-    private fun onButtonCreateAccountClicked() {
-        if (activity is LoginActivity) {
-            (activity as LoginActivity).naviageToCreateAccount()
-        }
+    override fun navigatetoMain() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun validateInputs(): Boolean {
-        val passwordLength = mBinding?.tvPassword?.text?.length ?: 0
-        return StringUtil.validateEmail(mBinding?.tvUsername?.text.toString()) && passwordLength >= 6
-    }
-
-    internal inner class LoginTextWatcher : TextWatcher {
+    internal inner class CreateAccountTextWatcher : TextWatcher {
 
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
             //Do nothing
@@ -125,24 +116,22 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(), S
     }
 
     private fun checkEnableButton() {
-        mBinding?.buttonLogin?.isEnabled = validateInputs()
+        mBinding?.buttonCreateAccount?.isEnabled = validateInputs()
     }
 
-    override fun navigateToCreateAccount() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun navigatetoMain() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private fun validateInputs(): Boolean {
+        val passwordLength = mBinding?.tvPassword?.text?.length ?: 0
+        val passwordMatch = mBinding?.tvPassword?.text?.toString()
+            ?.equals(mBinding?.tvRePassword?.text?.toString() ?: Constants.EMPTY_STRING) ?: false
+        return passwordMatch && StringUtil.validateEmail(mBinding?.tvUsername?.text.toString()) && passwordLength >= 6
     }
 
     companion object {
-        fun newInstance(): SignInFragment {
+        fun newInstance(): CreateAccountFragment {
             val args = Bundle()
-            val fragment = SignInFragment()
+            val fragment = CreateAccountFragment()
             fragment.arguments = args
             return fragment
         }
     }
-
 }

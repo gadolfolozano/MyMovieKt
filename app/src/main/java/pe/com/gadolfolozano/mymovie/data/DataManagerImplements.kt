@@ -15,6 +15,10 @@ class DataManagerImplements @Inject constructor(val firebaseHelper: FirebaseHelp
         return firebaseHelper.doLogin(username, password)
     }
 
+    override fun createAccount(username: String, password: String): LiveData<LoginResponseModel> {
+        return firebaseHelper.createAccount(username, password)
+    }
+
     override val dummyValue: LiveData<BaseResponseModel>
         get() {
             val data = MutableLiveData<BaseResponseModel>()
