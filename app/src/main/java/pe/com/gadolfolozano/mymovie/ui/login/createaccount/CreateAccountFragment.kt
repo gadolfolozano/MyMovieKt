@@ -15,6 +15,7 @@ import pe.com.gadolfolozano.mymovie.databinding.FragmentCreateAccountBinding
 import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
 import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseFragment
+import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
 import pe.com.gadolfolozano.mymovie.ui.util.Constants
 import pe.com.gadolfolozano.mymovie.ui.util.StringUtil
 import javax.inject.Inject
@@ -85,19 +86,16 @@ class CreateAccountFragment : BaseFragment<FragmentCreateAccountBinding, CreateA
                     }
                     BaseResponseModel.STATUS_SUCCESS -> {
                         hideLoading()
-                        Toast.makeText(
-                            activity,
-                            "user id: " + loginResponseModel.user?.id,
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        navigatetoMain()
                     }
                 }
             })
     }
 
     override fun navigatetoMain() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (activity is LoginActivity) {
+            (activity as LoginActivity).openMainActivity()
+        }
     }
 
     internal inner class CreateAccountTextWatcher : TextWatcher {

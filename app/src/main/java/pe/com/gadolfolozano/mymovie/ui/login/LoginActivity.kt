@@ -71,6 +71,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(), Logi
         finish()
     }
 
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.container)
+        if (fragment != null && fragment is CreateAccountFragment) {
+            navigateToSignIn()
+            return
+        }
+
+        super.onBackPressed()
+    }
+
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)

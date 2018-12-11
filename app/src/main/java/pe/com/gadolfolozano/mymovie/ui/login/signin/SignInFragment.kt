@@ -17,7 +17,6 @@ import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseFragment
 import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
 import pe.com.gadolfolozano.mymovie.ui.util.StringUtil
-
 import javax.inject.Inject
 
 class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(), SignInNavigator {
@@ -87,21 +86,14 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(), S
                     }
                     BaseResponseModel.STATUS_SUCCESS -> {
                         hideLoading()
-                        Toast.makeText(
-                            activity,
-                            "user id: " + loginResponseModel.user?.id,
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        navigatetoMain()
                     }
                 }
             })
     }
 
     private fun onButtonCreateAccountClicked() {
-        if (activity is LoginActivity) {
-            (activity as LoginActivity).naviageToCreateAccount()
-        }
+        navigateToCreateAccount()
     }
 
     private fun validateInputs(): Boolean {
@@ -129,11 +121,15 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(), S
     }
 
     override fun navigateToCreateAccount() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (activity is LoginActivity) {
+            (activity as LoginActivity).naviageToCreateAccount()
+        }
     }
 
     override fun navigatetoMain() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (activity is LoginActivity) {
+            (activity as LoginActivity).openMainActivity()
+        }
     }
 
     companion object {
