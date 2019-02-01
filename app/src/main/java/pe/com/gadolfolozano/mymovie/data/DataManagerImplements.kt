@@ -1,7 +1,6 @@
 package pe.com.gadolfolozano.mymovie.data
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import pe.com.gadolfolozano.mymovie.data.firebase.FirebaseHelper
 import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
 import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
@@ -19,18 +18,11 @@ class DataManagerImplements @Inject constructor(val firebaseHelper: FirebaseHelp
         return firebaseHelper.createAccount(username, password)
     }
 
-    override val dummyValue: LiveData<BaseResponseModel>
-        get() {
-            val data = MutableLiveData<BaseResponseModel>()
-            data.value = sucess
-            return data
-        }
+    override fun getCurrentUser(): LiveData<LoginResponseModel> {
+        return firebaseHelper.getCurrentUser()
+    }
 
-    private val sucess: BaseResponseModel
-        get() {
-            val baseModel = BaseResponseModel()
-            baseModel.status = BaseResponseModel.STATUS_SUCCESS
-
-            return baseModel
-        }
+    override fun doLogout(): LiveData<BaseResponseModel> {
+        return firebaseHelper.doLogout()
+    }
 }

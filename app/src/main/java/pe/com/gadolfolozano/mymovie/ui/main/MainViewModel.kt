@@ -8,6 +8,6 @@ import pe.com.gadolfolozano.mymovie.ui.base.BaseViewModel
 class MainViewModel(dataManager: DataManager) : BaseViewModel<MainNavigator>(dataManager) {
 
     fun logout(): LiveData<BaseResponseModel> {
-        return dataManager.dummyValue
+        return dataManager.doLogout()
     }
 }

@@ -6,6 +6,7 @@ import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySplashBinding
 import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
+import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
 import pe.com.gadolfolozano.mymovie.ui.login.LoginActivity
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivity
@@ -27,13 +28,17 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(), S
         super.onCreate(savedInstanceState)
 
         mSplashViewModel.navigator = this
-        mSplashViewModel.dummyValue.observe(this, Observer<BaseResponseModel> { baseModel ->
-            if (baseModel != null && baseModel.status == BaseResponseModel.STATUS_SUCCESS) {
-                openLoginActivity()
-            } else {
-                openMainActivity()
-            }
-        })
+        mSplashViewModel.getCurrentUser().observe(this,
+            Observer<LoginResponseModel> { loginResponseModel ->
+                when (loginResponseModel?.status) {
+                    BaseResponseModel.STATUS_SUCCESS -> {
+                        openMainActivity()
+                    }
+                    BaseResponseModel.STATUS_ERROR -> {
+                        openLoginActivity()
+                    }
+                }
+            })
     }
 
     override fun openLoginActivity() {
