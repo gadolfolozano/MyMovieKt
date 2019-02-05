@@ -13,7 +13,7 @@ import pe.com.gadolfolozano.mymovie.databinding.ActivityLoginBinding
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
 import pe.com.gadolfolozano.mymovie.ui.login.createaccount.CreateAccountFragment
 import pe.com.gadolfolozano.mymovie.ui.login.signin.SignInFragment
-import pe.com.gadolfolozano.mymovie.ui.main.MainActivity
+import pe.com.gadolfolozano.mymovie.ui.search.SearchActivity
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(), LoginNavigator, HasSupportFragmentInjector {
@@ -66,7 +66,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(), Logi
     }
 
     override fun openMainActivity() {
-        val intent = MainActivity.newIntent(this@LoginActivity)
+        val intent = SearchActivity.newIntent(this@LoginActivity)
         startActivity(intent)
         finish()
     }

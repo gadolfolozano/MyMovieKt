@@ -8,6 +8,8 @@ import pe.com.gadolfolozano.mymovie.ui.login.createaccount.CreateAccountFragment
 import pe.com.gadolfolozano.mymovie.ui.login.signin.SignInFragmentProvider
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivity
 import pe.com.gadolfolozano.mymovie.ui.main.MainActivityModule
+import pe.com.gadolfolozano.mymovie.ui.search.SearchActivity
+import pe.com.gadolfolozano.mymovie.ui.search.SearchActivityModule
 import pe.com.gadolfolozano.mymovie.ui.splash.SplashActivity
 import pe.com.gadolfolozano.mymovie.ui.splash.SplashActivityModule
 
@@ -28,4 +30,7 @@ abstract class ActivityBuilder {
         )
     )
     internal abstract fun bindLoginActivity(): LoginActivity
+
+    @ContributesAndroidInjector(modules = arrayOf(SearchActivityModule::class))
+    internal abstract fun bindSearchActivity(): SearchActivity
 }
