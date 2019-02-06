@@ -1,0 +1,186 @@
+{
+  "project_info": {
+    "project_number": "210268908785",
+    "firebase_url": "https://test-fun-a7409.firebaseio.com",
+    "project_id": "test-fun-a7409",
+    "storage_bucket": "test-fun-a7409.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210268908785:android:8b500f4c030d255f",
+        "android_client_info": {
+          "package_name": "com.entel.movil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210268908785-72qdnuon13eplotr3r7rv5g3fshi1br6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWqSxPAWYt2c1vrIbKaNqWppeAoJQ5efk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210268908785:android:a20b3b4d590ab3f8",
+        "android_client_info": {
+          "package_name": "com.example.gustavolozano.myapplicationkotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210268908785-ttnqk31k7ijbh7311oaj29fk5lij7k8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gustavolozano.myapplicationkotlin",
+            "certificate_hash": "ca5b839cb0568138bcfece288361d803107b3140"
+          }
+        },
+        {
+          "client_id": "210268908785-72qdnuon13eplotr3r7rv5g3fshi1br6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWqSxPAWYt2c1vrIbKaNqWppeAoJQ5efk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210268908785-72qdnuon13eplotr3r7rv5g3fshi1br6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "210268908785-5ckqs48kg0lm3ambqgo4loprodpru06q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gadolfolozano.IosUseCases"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210268908785:android:f38915fcdf990710",
+        "android_client_info": {
+          "package_name": "com.instagram.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210268908785-72qdnuon13eplotr3r7rv5g3fshi1br6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWqSxPAWYt2c1vrIbKaNqWppeAoJQ5efk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210268908785:android:11719c746a3b63ba",
+        "android_client_info": {
+          "package_name": "gadolfolozano.pe.mvpexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210268908785-72qdnuon13eplotr3r7rv5g3fshi1br6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWqSxPAWYt2c1vrIbKaNqWppeAoJQ5efk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210268908785:android:bfcd5eca81b6b9e6",
+        "android_client_info": {
+          "package_name": "pe.com.gadolfolozano.mymovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210268908785-72qdnuon13eplotr3r7rv5g3fshi1br6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWqSxPAWYt2c1vrIbKaNqWppeAoJQ5efk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
