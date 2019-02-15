@@ -9,8 +9,14 @@ import android.widget.TextView
 import pe.com.gadolfolozano.mymovie.R
 import pe.com.gadolfolozano.mymovie.model.MovieModel
 import pe.com.gadolfolozano.mymovie.ui.util.AdapterListener
+import pe.com.gadolfolozano.mymovie.ui.util.CommonBindingUtils
 
-class SearchMovieAdapter(private val movies: MutableList<MovieModel>) : RecyclerView.Adapter<SearchMovieAdapter.MyViewHolder>() {
+class SearchMovieAdapter(private var movies: MutableList<MovieModel>) :
+    RecyclerView.Adapter<SearchMovieAdapter.MyViewHolder>(), CommonBindingUtils.RecyclerHelper<MovieModel> {
+    override fun setData(data: MutableList<MovieModel>) {
+        movies = data
+        notifyDataSetChanged()
+    }
 
     private var adapterListener: AdapterListener<MovieModel>? = null
 
@@ -39,12 +45,6 @@ class SearchMovieAdapter(private val movies: MutableList<MovieModel>) : Recycler
             notifyItemRemoved(position)
             adapterListener?.onItemRemoved(movies, removed)
         }
-    }
-
-    fun addMoview(movieModel: MovieModel) {
-        movies.add(movieModel)
-        notifyItemInserted(movies.size)
-        adapterListener?.onItemAdded(movies, movieModel)
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {

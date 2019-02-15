@@ -2,9 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.main.MainActivity">
+    xmlns:bind="http://schemas.android.com/tools"
+    tools:context=".ui.main.MainActivity"
+    tools:ignore="MissingDefaultResource">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -25,7 +29,6 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@string/text_search_add_movie_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,9 +43,10 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:paddingBottom="12dp"
+            bind:data="@{viewModel.movies}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
         <EditText
             android:id="@+id/editText"
@@ -55,6 +59,7 @@
             android:ems="10"
             android:hint="@string/text_search_add_movie_hint"
             android:inputType="textPersonName"
+            android:visibility="@{viewModel.showAddMovieView ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
@@ -66,6 +71,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/text_search_add_movie_button"
+            android:visibility="@{viewModel.showAddMovieView ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editText" />

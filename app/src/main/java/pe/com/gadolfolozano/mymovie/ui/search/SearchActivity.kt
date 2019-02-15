@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
+import android.widget.Toast
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySearchBinding
@@ -37,22 +37,19 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         mSearchViewModel.navigator = this
 
         mBinding = getViewDataBinding()
+        mBinding?.viewModel = mSearchViewModel
 
         mBinding?.recyclerView?.layoutManager = LinearLayoutManager(this)
         searchMovieAdapter = SearchMovieAdapter(ArrayList<MovieModel>())
         searchMovieAdapter?.setAdapterListener(object : AdapterListener<MovieModel> {
             override fun onItemRemoved(dataSet: List<MovieModel>, item: MovieModel) {
-                if (dataSet.size < 5) {
-                    mBinding?.editText?.visibility = View.VISIBLE
-                    mBinding?.button?.visibility = View.VISIBLE
-                }
+                Toast.makeText(this@SearchActivity, "show " + true, Toast.LENGTH_SHORT).show()
+                mSearchViewModel.showAddMovieView.set(true)
             }
 
             override fun onItemAdded(dataSet: List<MovieModel>, item: MovieModel) {
-                if (dataSet.size == 5) {
-                    mBinding?.editText?.visibility = View.GONE
-                    mBinding?.button?.visibility = View.GONE
-                }
+                Toast.makeText(this@SearchActivity, "show " + false, Toast.LENGTH_SHORT).show()
+                mSearchViewModel.showAddMovieView.set(false)
             }
         })
         mBinding?.recyclerView?.adapter = searchMovieAdapter
@@ -64,9 +61,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
 
     fun onButtonAddClicked() {
         if (!mBinding?.editText?.text.isNullOrEmpty()) {
-            (mBinding?.recyclerView?.adapter as SearchMovieAdapter)
-                .addMoview(MovieModel(mBinding?.editText?.text.toString()))
-
+            mSearchViewModel.addMovie(MovieModel(mBinding?.editText?.text.toString()))
             mBinding?.editText?.setText(Constants.EMPTY_STRING)
         }
     }
