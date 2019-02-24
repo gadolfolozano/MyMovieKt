@@ -1,6 +1,7 @@
 package pe.com.gadolfolozano.mymovie.ui.search
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import pe.com.gadolfolozano.mymovie.R
 import pe.com.gadolfolozano.mymovie.model.MovieModel
-import pe.com.gadolfolozano.mymovie.ui.util.AdapterListener
 import pe.com.gadolfolozano.mymovie.ui.util.CommonBindingUtils
 
 class SearchMovieAdapter(private var movies: MutableList<MovieModel>) :
@@ -16,12 +16,7 @@ class SearchMovieAdapter(private var movies: MutableList<MovieModel>) :
     override fun setData(data: MutableList<MovieModel>) {
         movies = data
         notifyDataSetChanged()
-    }
-
-    private var adapterListener: AdapterListener<MovieModel>? = null
-
-    fun setAdapterListener(adapterListener: AdapterListener<MovieModel>) {
-        this.adapterListener = adapterListener
+        Log.i("DATABINDING " , "DATABINDING setData ")
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
@@ -41,9 +36,8 @@ class SearchMovieAdapter(private var movies: MutableList<MovieModel>) :
 
     private fun removeItem(position: Int) {
         if (movies.size > position) {
-            val removed = movies.removeAt(position)
+            movies.removeAt(position)
             notifyItemRemoved(position)
-            adapterListener?.onItemRemoved(movies, removed)
         }
     }
 

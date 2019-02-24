@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainActivity"
     tools:ignore="MissingDefaultResource">
 
@@ -43,10 +43,10 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:paddingBottom="12dp"
-            bind:data="@{viewModel.movies}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            bind:data="@{viewModel.movies}" />
 
         <EditText
             android:id="@+id/editText"
@@ -59,7 +59,8 @@
             android:ems="10"
             android:hint="@string/text_search_add_movie_hint"
             android:inputType="textPersonName"
-            android:visibility="@{viewModel.showAddMovieView ? View.VISIBLE : View.GONE}"
+            android:text="@={viewModel.movieInput}"
+            android:visibility="@{viewModel.movies.size &lt; 5 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
@@ -70,8 +71,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:onClick="@{() -> viewModel.onButtonAddClicked()}"
             android:text="@string/text_search_add_movie_button"
-            android:visibility="@{viewModel.showAddMovieView ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.movies.size &lt; 5 ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editText" />
