@@ -8,13 +8,9 @@ import pe.com.gadolfolozano.mymovie.ui.base.BaseViewModel
 import pe.com.gadolfolozano.mymovie.ui.util.Constants
 
 
-class SearchViewModel(dataManager: DataManager) : BaseViewModel<SearchNavigator>(dataManager) {
+class SearchViewModel(val dataManager: DataManager) : BaseViewModel<SearchNavigator>() {
     val movies = ObservableArrayList<MovieModel>()
     val movieInput = ObservableField<String>(Constants.EMPTY_STRING)
-
-    fun addMovie(movieModel: MovieModel) {
-        movies.add(movieModel)
-    }
 
     fun onButtonAddClicked() {
         val movieInputValue = movieInput.get()

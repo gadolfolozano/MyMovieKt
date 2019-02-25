@@ -15,9 +15,9 @@ import javax.inject.Inject
 class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), SearchNavigator {
 
     @Inject
-    lateinit var mSearchViewModel: SearchViewModel
+    lateinit var searchViewModel: SearchViewModel
 
-    var mBinding: ActivitySearchBinding? = null
+    var binding: ActivitySearchBinding? = null
 
     var searchMovieAdapter: SearchMovieAdapter? = null
 
@@ -26,19 +26,19 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
     override val layoutId: Int
         get() = R.layout.activity_search
     override val viewModel: SearchViewModel
-        get() = mSearchViewModel
+        get() = searchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mSearchViewModel.navigator = this
+        searchViewModel.navigator = this
 
-        mBinding = getViewDataBinding()
-        mBinding?.viewModel = mSearchViewModel
+        binding = getViewDataBinding()
+        binding?.viewModel = searchViewModel
 
-        mBinding?.recyclerView?.layoutManager = LinearLayoutManager(this)
+        binding?.recyclerView?.layoutManager = LinearLayoutManager(this)
         searchMovieAdapter = SearchMovieAdapter(ArrayList<MovieModel>())
-        mBinding?.recyclerView?.adapter = searchMovieAdapter
+        binding?.recyclerView?.adapter = searchMovieAdapter
     }
 
     override fun openMain() {

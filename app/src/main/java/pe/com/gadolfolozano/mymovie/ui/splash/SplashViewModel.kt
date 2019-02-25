@@ -5,7 +5,7 @@ import pe.com.gadolfolozano.mymovie.data.DataManager
 import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseViewModel
 
-class SplashViewModel(dataManager: DataManager) : BaseViewModel<SplashNavigator>(dataManager) {
+class SplashViewModel(val dataManager: DataManager) : BaseViewModel<SplashNavigator>() {
 
     fun getCurrentUser(): LiveData<LoginResponseModel> {
         return dataManager.getCurrentUser()
