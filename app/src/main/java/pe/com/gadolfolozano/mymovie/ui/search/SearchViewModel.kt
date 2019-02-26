@@ -17,6 +17,10 @@ class SearchViewModel(val dataManager: DataManager) : BaseViewModel<SearchNaviga
         if (movieInputValue != null) {
             movies.add(MovieModel(movieInputValue))
             movieInput.set(Constants.EMPTY_STRING)
+
+            if(movies.size >= 5) {
+                navigator?.hideKeyboard()
+            }
         }
     }
 }

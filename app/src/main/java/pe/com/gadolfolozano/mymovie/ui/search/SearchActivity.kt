@@ -37,7 +37,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         binding?.viewModel = searchViewModel
 
         binding?.recyclerView?.layoutManager = LinearLayoutManager(this)
-        searchMovieAdapter = SearchMovieAdapter(ArrayList<MovieModel>())
+        searchMovieAdapter = SearchMovieAdapter(this)
         binding?.recyclerView?.adapter = searchMovieAdapter
     }
 
@@ -45,6 +45,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         val intent = MainActivity.newIntent(this@SearchActivity)
         startActivity(intent)
         finish()
+    }
+
+    override fun onDeleteMovie(movieModel: MovieModel, adapterPosition: Int) {
+        if (searchViewModel.movies.size > adapterPosition) {
+            searchViewModel.movies.removeAt(adapterPosition)
+        }
     }
 
     companion object {
