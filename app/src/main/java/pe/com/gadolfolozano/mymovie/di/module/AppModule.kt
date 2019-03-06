@@ -8,11 +8,19 @@ import pe.com.gadolfolozano.mymovie.data.DataManager
 import pe.com.gadolfolozano.mymovie.data.DataManagerImplements
 import pe.com.gadolfolozano.mymovie.data.firebase.FirebaseHelper
 import pe.com.gadolfolozano.mymovie.data.firebase.FirebaseHelperImplements
+import pe.com.gadolfolozano.mymovie.data.remote.ApiHelper
+import pe.com.gadolfolozano.mymovie.data.remote.ApiHelperImplements
 
 import javax.inject.Singleton
 
 @Module
 class AppModule {
+
+    @Provides
+    @Singleton
+    internal fun provideApiHelper(apiHelperImplements: ApiHelperImplements): ApiHelper {
+        return apiHelperImplements
+    }
 
     @Provides
     @Singleton

@@ -1,11 +1,14 @@
 package pe.com.gadolfolozano.mymovie.ui.search
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
+import pe.com.gadolfolozano.mymovie.data.remote.entity.MovieWrapperResponse
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySearchBinding
 import pe.com.gadolfolozano.mymovie.model.MovieModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
@@ -39,6 +42,22 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         binding?.recyclerView?.layoutManager = LinearLayoutManager(this)
         searchMovieAdapter = SearchMovieAdapter(this)
         binding?.recyclerView?.adapter = searchMovieAdapter
+
+        searchViewModel.isLoading.observe(this, Observer<Boolean> { isLoading ->
+            if (isLoading != null && isLoading) {
+                //showLoading()
+            } else {
+                //hideLoading()
+            }
+        })
+
+        searchViewModel.moviesFound.observe(this, Observer<MovieWrapperResponse> { response ->
+            Log.i("holi", "response " + response)
+        })
+
+        searchViewModel.onButtonSearchClicked()?.observe(this, Observer<MovieWrapperResponse> { response ->
+            Log.i("holi", "response " + response)
+        })
     }
 
     override fun openMain() {

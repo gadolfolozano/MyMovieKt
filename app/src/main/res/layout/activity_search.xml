@@ -78,5 +78,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/editText" />
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_search_seach_movies"
+            android:visibility="@{viewModel.movies.size >= 5 ? View.VISIBLE : View.GONE}"
+            android:onClick="@{() -> viewModel.onButtonSearchClicked()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
+
     </android.support.constraint.ConstraintLayout>
 </layout>

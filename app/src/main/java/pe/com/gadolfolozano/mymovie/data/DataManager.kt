@@ -1,15 +1,14 @@
 package pe.com.gadolfolozano.mymovie.data
 
-import android.arch.lifecycle.LiveData
-import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
-import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
+import pe.com.gadolfolozano.mymovie.data.firebase.FirebaseHelper
+import pe.com.gadolfolozano.mymovie.data.remote.ApiHelper
 
-interface DataManager {
-    fun getCurrentUser(): LiveData<LoginResponseModel>
+interface DataManager : FirebaseHelper, ApiHelper {
+    /*fun getCurrentUser(): LiveData<LoginResponseModel>
 
     fun doLogin(username: String, password: String): LiveData<LoginResponseModel>
 
     fun createAccount(username: String, password: String): LiveData<LoginResponseModel>
 
-    fun doLogout(): LiveData<BaseResponseModel>
+    fun doLogout(): LiveData<BaseResponseModel>*/
 }

@@ -13,4 +13,6 @@
     <string name="text_search_add_movie_label">Please add 5 movies</string>
     <string name="text_search_add_movie_hint">Write a movie</string>
     <string name="text_search_add_movie_button">Add</string>
+
+    <string name="text_search_seach_movies">Search Movies</string>
 </resources>
