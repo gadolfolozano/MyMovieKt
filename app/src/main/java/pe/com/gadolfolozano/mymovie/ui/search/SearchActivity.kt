@@ -55,8 +55,14 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
             Log.i("holi", "response " + response)
         })
 
-        searchViewModel.onButtonSearchClicked()?.observe(this, Observer<MovieWrapperResponse> { response ->
-            Log.i("holi", "response " + response)
+        val movieslook = ArrayList<String>()
+        movieslook.add("Matrix")
+        movieslook.add("back")
+        movieslook.add("jack")
+        movieslook.add("wallie")
+        movieslook.add("chocolate")
+        searchViewModel.getMovieList(movieslook).observe(this, Observer { movieList ->
+            Log.i("holi", "movieList " + movieList)
         })
     }
 

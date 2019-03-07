@@ -29,7 +29,7 @@ class DataManagerImplements @Inject constructor(val apiHelper: ApiHelperImplemen
         return firebaseHelper.doLogout()
     }
 
-    override fun obtainMovie(movieName: String?): RetrofitLiveData<MovieWrapperResponse>? {
+    override fun obtainMovie(movieName: String?): LiveData<MovieWrapperResponse>? {
         return apiHelper.obtainMovie(movieName)
     }
 }
