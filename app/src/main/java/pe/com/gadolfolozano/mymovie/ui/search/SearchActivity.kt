@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
-import pe.com.gadolfolozano.mymovie.data.remote.entity.MovieWrapperResponse
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySearchBinding
 import pe.com.gadolfolozano.mymovie.model.MovieModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
@@ -51,7 +50,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
             }
         })
 
-        searchViewModel.moviesFound.observe(this, Observer<MovieWrapperResponse> { response ->
+        searchViewModel.moviesFound.observe(this, Observer { response ->
             Log.i("holi", "response " + response)
         })
 
@@ -61,9 +60,9 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         movieslook.add("jack")
         movieslook.add("wallie")
         movieslook.add("chocolate")
-        searchViewModel.getMovieList(movieslook).observe(this, Observer { movieList ->
+        /*searchViewModel.getMovieList(movieslook).observe(this, Observer { movieList ->
             Log.i("holi", "movieList " + movieList)
-        })
+        })*/
     }
 
     override fun openMain() {

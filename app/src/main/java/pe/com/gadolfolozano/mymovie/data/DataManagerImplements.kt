@@ -4,14 +4,16 @@ import android.arch.lifecycle.LiveData
 import pe.com.gadolfolozano.mymovie.data.firebase.FirebaseHelper
 import pe.com.gadolfolozano.mymovie.data.remote.ApiHelperImplements
 import pe.com.gadolfolozano.mymovie.data.remote.entity.MovieWrapperResponse
-import pe.com.gadolfolozano.mymovie.data.remote.util.RetrofitLiveData
 import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
 import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DataManagerImplements @Inject constructor(val apiHelper: ApiHelperImplements, val firebaseHelper: FirebaseHelper) : DataManager {
+class DataManagerImplements @Inject constructor(
+    val apiHelper: ApiHelperImplements,
+    val firebaseHelper: FirebaseHelper
+) : DataManager {
 
     override fun doLogin(username: String, password: String): LiveData<LoginResponseModel> {
         return firebaseHelper.doLogin(username, password)
@@ -31,5 +33,9 @@ class DataManagerImplements @Inject constructor(val apiHelper: ApiHelperImplemen
 
     override fun obtainMovie(movieName: String?): LiveData<MovieWrapperResponse>? {
         return apiHelper.obtainMovie(movieName)
+    }
+
+    override fun obtainMovies(movies: MutableList<String>?): LiveData<MutableList<MovieWrapperResponse>> {
+        return apiHelper.obtainMovies(movies)
     }
 }
