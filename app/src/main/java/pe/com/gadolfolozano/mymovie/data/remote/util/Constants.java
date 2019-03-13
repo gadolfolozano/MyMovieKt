@@ -8,4 +8,6 @@ public class Constants {
 
     public static final String BASE_URL = "http://www.omdbapi.com";
 
+    public static final String API_KEY = "http://www.omdbapi.com";
+
 }
