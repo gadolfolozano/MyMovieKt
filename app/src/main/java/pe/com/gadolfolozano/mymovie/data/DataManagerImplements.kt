@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import pe.com.gadolfolozano.mymovie.data.firebase.FirebaseHelper
 import pe.com.gadolfolozano.mymovie.data.remote.ApiHelperImplements
 import pe.com.gadolfolozano.mymovie.data.remote.entity.MovieWrapperResponse
+import pe.com.gadolfolozano.mymovie.data.remote.util.StateData
 import pe.com.gadolfolozano.mymovie.model.response.BaseResponseModel
 import pe.com.gadolfolozano.mymovie.model.response.LoginResponseModel
 import javax.inject.Inject
@@ -31,11 +32,11 @@ class DataManagerImplements @Inject constructor(
         return firebaseHelper.doLogout()
     }
 
-    override fun obtainMovie(movieName: String?): LiveData<MovieWrapperResponse>? {
+    override fun obtainMovie(movieName: String?): LiveData<StateData<MovieWrapperResponse>>? {
         return apiHelper.obtainMovie(movieName)
     }
 
-    override fun obtainMovies(movies: MutableList<String>?): LiveData<MutableList<MovieWrapperResponse>> {
+    override fun obtainMovies(movies: MutableList<String>?): LiveData<StateData<MutableList<MovieWrapperResponse>>> {
         return apiHelper.obtainMovies(movies)
     }
 }

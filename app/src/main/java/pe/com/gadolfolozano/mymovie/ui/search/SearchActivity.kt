@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
+import pe.com.gadolfolozano.mymovie.data.remote.util.StateData
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySearchBinding
 import pe.com.gadolfolozano.mymovie.model.MovieModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
@@ -42,27 +42,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         searchMovieAdapter = SearchMovieAdapter(this)
         binding?.recyclerView?.adapter = searchMovieAdapter
 
-        searchViewModel.isLoading.observe(this, Observer<Boolean> { isLoading ->
-            if (isLoading != null && isLoading) {
-                //showLoading()
-            } else {
-                //hideLoading()
+        searchViewModel.moviesFound.observe(this, Observer { response ->
+            response.let {
+                if (it?.status == StateData.STATE_LOADING) {
+                    showLoading()
+                } else if (it?.status == StateData.STATE_SUCCESS) {
+                    hideLoading()
+                } else if (it?.status == StateData.STATE_ERROR) {
+                    hideLoading()
+                }
             }
         })
 
-        searchViewModel.moviesFound.observe(this, Observer { response ->
-            Log.i("holi", "response " + response)
-        })
-
-        val movieslook = ArrayList<String>()
-        movieslook.add("Matrix")
-        movieslook.add("back")
-        movieslook.add("jack")
-        movieslook.add("wallie")
-        movieslook.add("chocolate")
-        /*searchViewModel.getMovieList(movieslook).observe(this, Observer { movieList ->
-            Log.i("holi", "movieList " + movieList)
-        })*/
     }
 
     override fun openMain() {

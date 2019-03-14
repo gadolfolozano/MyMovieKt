@@ -3,6 +3,7 @@ package pe.com.gadolfolozano.mymovie.data.remote;
 import android.arch.lifecycle.LiveData;
 import pe.com.gadolfolozano.mymovie.data.remote.entity.MovieWrapperResponse;
 import pe.com.gadolfolozano.mymovie.data.remote.repository.MovieRepository;
+import pe.com.gadolfolozano.mymovie.data.remote.util.StateData;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,12 +20,12 @@ public class ApiHelperImplements implements ApiHelper {
     }
 
     @Override
-    public LiveData<MovieWrapperResponse> obtainMovie(String movieName) {
+    public LiveData<StateData<MovieWrapperResponse>> obtainMovie(String movieName) {
         return movieRepository.getMovie(movieName);
     }
 
     @Override
-    public LiveData<List<MovieWrapperResponse>> obtainMovies(List<String> movies) {
+    public LiveData<StateData<List<MovieWrapperResponse>>> obtainMovies(List<String> movies) {
         return movieRepository.getMovies(movies);
     }
 }
