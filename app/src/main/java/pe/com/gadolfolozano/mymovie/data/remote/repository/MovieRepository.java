@@ -1,14 +1,18 @@
 package pe.com.gadolfolozano.mymovie.data.remote.repository;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.Nullable;
 import pe.com.gadolfolozano.mymovie.data.remote.entity.MovieWrapperResponse;
-import pe.com.gadolfolozano.mymovie.data.remote.util.ApiInterface;
-import pe.com.gadolfolozano.mymovie.data.remote.util.Constants;
-import pe.com.gadolfolozano.mymovie.data.remote.util.RetrofitLiveData;
-import pe.com.gadolfolozano.mymovie.data.remote.util.StateData;
+import pe.com.gadolfolozano.mymovie.data.remote.mapper.MovieMapper;
+import pe.com.gadolfolozano.mymovie.data.remote.util.*;
+import pe.com.gadolfolozano.mymovie.data.wrapper.State;
+import pe.com.gadolfolozano.mymovie.data.wrapper.StateData;
+import pe.com.gadolfolozano.mymovie.model.MovieWrapperModel;
+import pe.com.gadolfolozano.mymovie.model.SearchMoviesModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,58 +22,74 @@ import java.util.List;
 @Singleton
 public class MovieRepository {
     private final ApiInterface apiInterface;
+    private final MovieMapper movieMapper;
 
     @Inject
-    public MovieRepository(ApiInterface apiInterface) {
+    public MovieRepository(ApiInterface apiInterface, MovieMapper movieMapper) {
         this.apiInterface = apiInterface;
+        this.movieMapper = movieMapper;
     }
 
-    public LiveData<StateData<MovieWrapperResponse>> getMovie(String movieName) {
-        return new RetrofitLiveData<>(apiInterface.obtainMovie(Constants.API_KEY, movieName));
+    public LiveData<StateData<MovieWrapperModel>> getMovie(final String movieName) {
+        return Transformations.map(new RetrofitLiveData<>(apiInterface.obtainMovie(Constants.API_KEY, movieName)), new Function<StateData<MovieWrapperResponse>, StateData<MovieWrapperModel>>() {
+            @Override
+            public StateData<MovieWrapperModel> apply(StateData<MovieWrapperResponse> stateData) {
+                StateData<MovieWrapperModel> movieModelStateData = new StateData<>();
+                movieModelStateData.setState(stateData.getState());
+                movieModelStateData.setData(movieMapper.toModel(stateData.getData()));
+                return movieModelStateData;
+            }
+        });
     }
 
-    public LiveData<StateData<List<MovieWrapperResponse>>> getMovies(List<String> movies) {
-        final MediatorLiveData<StateData<List<MovieWrapperResponse>>> merged = new MediatorLiveData<>();
+    public LiveData<StateData<SearchMoviesModel>> getMovies(List<String> movies) {
+        final MediatorLiveData<StateData<SearchMoviesModel>> merged = new MediatorLiveData<>();
 
-        List<LiveData<StateData<MovieWrapperResponse>>> sources = new ArrayList<>();
+        List<LiveData<StateData<MovieWrapperModel>>> sources = new ArrayList<>();
         for (String movie : movies) {
             sources.add(getMovie(movie));
         }
 
-        merged.setValue(new StateData<List<MovieWrapperResponse>>().loading());
+        merged.setValue(new StateData<SearchMoviesModel>().loading());
         addSources(merged, sources);
 
         return merged;
     }
 
-    private List<MovieWrapperResponse> mergeLatestMovies(MediatorLiveData<StateData<List<MovieWrapperResponse>>> merged, MovieWrapperResponse movieWrapperResponse) {
-        List<MovieWrapperResponse> mergedList = merged.getValue() != null && merged.getValue().getData() != null ? merged.getValue().getData() : new ArrayList<MovieWrapperResponse>();
-        mergedList.add(movieWrapperResponse);
-        return mergedList;
+    private SearchMoviesModel mergeLatestMovies(MediatorLiveData<StateData<SearchMoviesModel>> merged, MovieWrapperModel movieWrapperResponse) {
+        SearchMoviesModel searchMoviesModel = new SearchMoviesModel();
+        List<MovieWrapperModel> mergedMovies;
+        if (merged.getValue() != null && merged.getValue().getData() != null && merged.getValue().getData().getMovieWrapperModels() != null) {
+            mergedMovies = merged.getValue().getData().getMovieWrapperModels();
+        } else {
+            mergedMovies = new ArrayList<>();
+        }
+        mergedMovies.add(movieWrapperResponse);
+        searchMoviesModel.setMovieWrapperModels(mergedMovies);
+        return searchMoviesModel;
     }
 
-    private void addSource(final MediatorLiveData<StateData<List<MovieWrapperResponse>>> merged, final LiveData<StateData<MovieWrapperResponse>> movie, final List<LiveData<StateData<MovieWrapperResponse>>> sources) {
-        merged.addSource(movie, new Observer<StateData<MovieWrapperResponse>>() {
+    private void addSource(final MediatorLiveData<StateData<SearchMoviesModel>> merged, final LiveData<StateData<MovieWrapperModel>> movie, final List<LiveData<StateData<MovieWrapperModel>>> sources) {
+        merged.addSource(movie, new Observer<StateData<MovieWrapperModel>>() {
             @Override
-            public void onChanged(@Nullable StateData<MovieWrapperResponse> stateData) {
-                if (stateData != null && stateData.getStatus() == StateData.STATE_SUCCESS) {
-                    List<MovieWrapperResponse> merdedList = mergeLatestMovies(merged, stateData.getData());
-                    StateData<List<MovieWrapperResponse>> stateDataResult = new StateData<>();
-                    stateDataResult.setData(merdedList);
-                    stateDataResult.setStatus(merdedList.size() == sources.size() ? StateData.STATE_SUCCESS : StateData.STATE_LOADING);
+            public void onChanged(@Nullable StateData<MovieWrapperModel> stateData) {
+                if (stateData != null && stateData.getState() != null && stateData.getState().getStatus() == State.STATE_SUCCESS) {
+                    SearchMoviesModel searchMoviesModel = mergeLatestMovies(merged, stateData.getData());
+                    StateData<SearchMoviesModel> stateDataResult = new StateData<>();
+                    stateDataResult.setData(searchMoviesModel);
+                    stateDataResult.setState(searchMoviesModel.getMovieWrapperModels() != null && searchMoviesModel.getMovieWrapperModels().size() == sources.size() ? new State().success() : new State().loading());
                     merged.setValue(stateDataResult);
                     merged.removeSource(movie);
-                } else if (stateData != null && stateData.getStatus() == StateData.STATE_ERROR) {
-                    StateData<List<MovieWrapperResponse>> errorState;
+                } else if (stateData != null && stateData.getState() != null && stateData.getState().getStatus() == State.STATE_ERROR) {
+                    StateData<SearchMoviesModel> errorState = new StateData<>();
                     if (merged.getValue() != null) {
                         errorState = merged.getValue();
-                        errorState.setStatus(StateData.STATE_ERROR);
-                        errorState.setError(stateData.getError());
+                        errorState.setState(stateData.getState());
                     } else {
-                        errorState = new StateData<List<MovieWrapperResponse>>().error(stateData.getError());
+                        errorState.setState(stateData.getState());
                     }
                     merged.setValue(errorState);
-                    for (LiveData source : sources) {
+                    for (LiveData<StateData<MovieWrapperModel>> source : sources) {
                         merged.removeSource(source);
                     }
                 }
@@ -77,8 +97,8 @@ public class MovieRepository {
         });
     }
 
-    private void addSources(final MediatorLiveData<StateData<List<MovieWrapperResponse>>> merged, List<LiveData<StateData<MovieWrapperResponse>>> sources) {
-        for (LiveData<StateData<MovieWrapperResponse>> source : sources) {
+    private void addSources(final MediatorLiveData<StateData<SearchMoviesModel>> merged, List<LiveData<StateData<MovieWrapperModel>>> sources) {
+        for (LiveData<StateData<MovieWrapperModel>> source : sources) {
             addSource(merged, source, sources);
         }
     }

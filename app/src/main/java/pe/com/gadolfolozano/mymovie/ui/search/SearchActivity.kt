@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import pe.com.gadolfolozano.mymovie.BR
 import pe.com.gadolfolozano.mymovie.R
-import pe.com.gadolfolozano.mymovie.data.remote.util.StateData
+import pe.com.gadolfolozano.mymovie.data.wrapper.State
 import pe.com.gadolfolozano.mymovie.databinding.ActivitySearchBinding
 import pe.com.gadolfolozano.mymovie.model.MovieModel
 import pe.com.gadolfolozano.mymovie.ui.base.BaseActivity
@@ -43,13 +43,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding, SearchViewModel>(), S
         binding?.recyclerView?.adapter = searchMovieAdapter
 
         searchViewModel.moviesFound.observe(this, Observer { response ->
-            response.let {
-                if (it?.status == StateData.STATE_LOADING) {
-                    showLoading()
-                } else if (it?.status == StateData.STATE_SUCCESS) {
-                    hideLoading()
-                } else if (it?.status == StateData.STATE_ERROR) {
-                    hideLoading()
+            response?.state?.let {
+                when {
+                    it.status == State.STATE_LOADING -> showLoading()
+                    it.status == State.STATE_SUCCESS -> hideLoading()
+                    it.status == State.STATE_ERROR -> hideLoading()
                 }
             }
         })

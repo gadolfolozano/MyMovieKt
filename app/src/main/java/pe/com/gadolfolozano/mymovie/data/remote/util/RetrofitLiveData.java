@@ -1,6 +1,7 @@
 package pe.com.gadolfolozano.mymovie.data.remote.util;
 
 import android.arch.lifecycle.LiveData;
+import pe.com.gadolfolozano.mymovie.data.wrapper.StateData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

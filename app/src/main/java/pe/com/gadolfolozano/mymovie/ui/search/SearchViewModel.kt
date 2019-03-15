@@ -23,7 +23,9 @@ class SearchViewModel(val dataManager: DataManager) : BaseViewModel<SearchNaviga
     fun onButtonAddClicked() {
         val movieInputValue = movieInput.get()
         if (movieInputValue != null) {
-            movies.add(MovieModel(movieInputValue))
+            val movieModel = MovieModel()
+            movieModel.title = movieInputValue
+            movies.add(movieModel)
             movieInput.set(Constants.EMPTY_STRING)
 
             if (movies.size >= 5) {
